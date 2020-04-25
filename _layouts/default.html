@@ -18,9 +18,9 @@
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-	
+
 	<style>
-	
+
 		.gnav {
 			font-size: 1.1rem;
 			display: flex;
@@ -84,12 +84,62 @@
 			overflow: visible;
 		}
 	</style>
-	
+
   </head>
   <body>
 
     <header class="page-header" role="banner">
-	  <div align="right"><a href="http://translate.google.com/translate?langpair=ja%7Cen&hl=en&u={{site.url}}{{page.url}}" style="color:white;">English (Google Translation)</a></div>
+
+		{% assign has_en_page = false %}
+
+		{% if page.url == "/" %}
+			{% assign has_en_page = true %}
+		{% endif %}
+
+		{% if page.url contains "/oc" %}
+			{% assign has_en_page = true %}
+		{% endif %}
+
+		{% if page.url contains "/zoom" %}
+			{% assign has_en_page = true %}
+		{% endif %}
+
+		{% if page.url contains "/faculty_members" %}
+			{% assign has_en_page = true %}
+		{% endif %}
+
+		{% if page.url == "/lms_lecturers/" %}
+			{% assign has_en_page = true %}
+		{% endif %}
+
+		{% if page.url contains "/compare" %}
+			{% assign has_en_page = true %}
+		{% endif %}
+
+		{% if page.url contains "/webex" %}
+			{% assign has_en_page = true %}
+		{% endif %}
+
+	  {% if page.url contains "/events" %}
+			{% assign has_en_page = true %}
+		{% endif %}
+
+    {% if page.url contains "/sitemap" %}
+			{% assign has_en_page = true %}
+		{% endif %}
+
+		{% if page.url contains "/en" %}
+			{% assign has_en_page = false %}
+		{% endif %}
+
+	  <div align="right">
+	    {% if has_en_page %}
+			<a href="{{site.url}}/en{{page.url}}" style="color:white;">English </a>
+		{% else %}
+			<a href="http://translate.google.com/translate?langpair=ja%7Cen&hl=en&u={{site.url}}{{page.url}}" style="color:white;">English (Google Translation)</a>
+		{% endif %}
+	  </div>
+
       <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
       <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
       {% if site.github.is_project_page %}
@@ -108,7 +158,9 @@
 		    <a>オンライン授業</a>
 		    <ul>
 		      <li><a href="https://utelecon.github.io/oc">学生用</a></li>
-		      <li><a href="">教員用（執筆中）</a></li>
+		      <li><a href="https://utelecon.github.io/faculty_members">教員用</a></li>
+                      <li><a href="https://utelecon.github.io/lms_lecturers/">ITC-LMS 教員用</a></li>
+                      <li><a href="https://utelecon.github.io/faculty_members/let_students_know_your_url">授業URL通知の仕方(教員-学生)</a></li>
 		    </ul>
 		  </li>
 		  <li ontouchstart="">
@@ -129,18 +181,27 @@
 		    <a>イベント・説明会</a>
 		    <ul>
 		      <li>
-				<a href="/events/2020-03-27/">2020/3/27</a>
+				<a href="/events/2020-luncheon/">4/22 オンライン授業情報交換会</a>
 		      </li>
 		      <li>
-				<a href="/events/2020-03-26/">2020/3/26</a>
+				<a href="/events/2020-04-16/">4/16 授業開始後2週間説明会</a>
 		      </li>
 		      <li>
-				<a href="/events/2020-03-19/">2020/3/19</a>
+				<a href="/events/2020-03-27/">3/27 オンデマンド講座・語学教育相談会</a>
 		      </li>
 		      <li>
-				<a href="/events/2020-03-13/">2020/3/13</a>
+				<a href="/events/2020-03-26/">3/26 URL渡し方説明会</a>
+		      </li>
+		      <li>
+				<a href="/events/2020-03-19/">3/19 Zoom基礎講座</a>
+		      </li>
+		      <li>
+				<a href="/events/2020-03-13/">3/13 授業オンライン化説明会</a>
 		      </li>
 		    </ul>
+		  </li>
+      <li>
+		    <a href="https://utelecon.github.io/sitemap/">サイトマップ</a>
 		  </li>
 		</ul>
 
@@ -148,6 +209,9 @@
     </header>
 
     <main id="content" class="main-content" role="main">
+      <h3>Table of Contents</h3>
+      {% include toc.html html=content %}
+
       {{ content }}
 
       <footer class="site-footer">
